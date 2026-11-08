@@ -29,7 +29,7 @@ This repository details my work architecting, deploying, and operationalizing Mi
 3. **Linux Host Integration**: Connected two Linux hosts to broaden telemetry coverage. I configured the Common Event Format (CEF) via AMA connector for the first host, and the Syslog via AMA connector for the second. I created distinct DCRs to capture `LOG_WARNING` level events and above.
 4. **Unified XDR Connection**: Linked the Microsoft Defender XDR tenant to the Sentinel workspace to unify alert data and enable cross-domain threat hunting.
 
-![Screenshot](sentinel-data-connectors-status.png)  
+![Screenshot](images/sentinel-data-connectors-status.png)  
 *Caption: Microsoft Sentinel Content Hub showing active data connectors for Windows, Linux, and Azure Activity.*
 
 ### Phase 2: Custom Detection Engineering and Normalization
@@ -38,7 +38,7 @@ This repository details my work architecting, deploying, and operationalizing Mi
 3. **Privilege Escalation Detection Rule**: Developed a complex KQL query using a `leftouter` join to correlate Event ID 4732 (member added to security-enabled local group) with the corresponding user account name. This resolves the limitation of SID-only logging. I mapped the resolved username to the Account entity.
 4. **ASIM Parser Deployment**: Explored and deployed the `_Im_RegistryEvent_MicrosoftWindowsEvent` ASIM function to normalize registry event data. This simplifies future cross-platform correlation and query writing.
 
-![Screenshot](sentinel-kql-privilege-escalation-query.png)
+![Screenshot](images/sentinel-kql-privilege-escalation-query.png)
 *Caption: Custom KQL query utilizing a join operation to resolve a user SID to a readable username for Entity Mapping.*
 
 ### Phase 3: SOAR Automation and Incident Management
@@ -46,14 +46,14 @@ This repository details my work architecting, deploying, and operationalizing Mi
 2. **Automation Rules**: Created an automation rule triggered when an incident is created with specific MITRE ATT&CK tactics (Execution, Persistence, Command and Control). I configured the rule to automatically run the ransomware playbook and assign the incident to the Tier 2 analyst queue.
 3. **Incident Investigation**: Investigated a triggered "Startup RegKey" incident. I managed the incident lifecycle by adding tags, assigning ownership, and utilizing the Investigation Graph to explore related alerts and timeline events for the compromised host. I classified the incident as a "True positive - suspicious activity" upon completion.
 
-![Screenshot](sentinel-automation-rule-configuration.png)  
+![Screenshot](images/sentinel-automation-rule-configuration.png)  
 *Caption: Automation rule configuration triggering a Logic App playbook based on incident tactics.*
 
 ### Phase 4: Visualization and Content Management
 1. **Custom Workbook Creation**: Built a custom Sentinel Workbook from scratch. I added a time chart visualization for `SecurityEvent` data and a grid view, applying custom width layouts and heatmap column rendering to improve data readability for SOC analysts.
 2. **DevOps Repository Integration**: Exported a custom analytics rule to a JSON ARM template. I initialized an Azure DevOps repository, uploaded the JSON file, and configured the Sentinel Repositories feature to connect to the Azure DevOps main branch. This establishes a foundation for CI/CD management of detection content.
 
-![Screenshot](sentinel-custom-workbook-dashboard.png)  
+![Screenshot](images/sentinel-custom-workbook-dashboard.png)  
 *Caption: Custom Microsoft Sentinel Workbook displaying security event visualizations with heatmap formatting.*
 
 ## Key Findings and Outcomes
